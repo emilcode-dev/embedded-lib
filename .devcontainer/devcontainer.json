@@ -1,0 +1,16 @@
+{
+    "name": "Dev-Container for Generic Embedded Library",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "ms-python.python"
+            ]
+        }
+    },
+    "postCreateCommand": "echo 'Dev-Container for Generic Embedded Library is ready!'"
+}
