@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.23)
 project(embeddedlib LANGUAGES C)
 
 # Default to production if not specified
@@ -8,8 +8,9 @@ endif()
 
 if(TARGET_GROUP STREQUAL production)
     add_subdirectory(src)
-    add_library(${PROJECT_NAME}::embeddedlib ALIAS EmbeddedLib)
-    install(TARGETS ${PROJECT_NAME}::embeddedlib)
+    # add_library(${PROJECT_NAME}::embeddedlib ALIAS EmbeddedLib)
+    install(DIRECTORY include/ DESTINATION include)
+    install(TARGETS embeddedlib)    
 elseif(TARGET_GROUP STREQUAL test)
     add_subdirectory(src)
     enable_testing()

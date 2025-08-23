@@ -1,5 +1,5 @@
-add_library(EmbeddedLib STATIC embeddedlib.c)
+add_library(embeddedlib STATIC embeddedlib.c)
 
-target_include_directories(EmbeddedLib PUBLIC
+target_include_directories(embeddedlib PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/../include
 )
