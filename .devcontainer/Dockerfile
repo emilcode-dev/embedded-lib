@@ -13,4 +13,4 @@ RUN apt-get update && \
     cmake
 
 # Install python packages
-RUN pip3 install numpy --break-system-packages
+RUN pip3 install conan --break-system-packages
