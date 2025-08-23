@@ -1,0 +1,19 @@
+cmake_minimum_required(VERSION 3.10)
+project(embeddedlib LANGUAGES C)
+
+# Default to production if not specified
+if(NOT DEFINED TARGET_GROUP)
+    set(TARGET_GROUP production)
+endif()
+
+if(TARGET_GROUP STREQUAL production)
+    add_subdirectory(src)
+    add_library(${PROJECT_NAME}::embeddedlib ALIAS EmbeddedLib)
+elseif(TARGET_GROUP STREQUAL test)
+    add_subdirectory(src)
+    enable_testing()
+    add_subdirectory(unity)
+    add_subdirectory(tests)
+else()
+  message(FATAL_ERROR "Given TARGET_GROUP unknown")
+endif()
