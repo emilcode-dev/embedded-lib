@@ -3,7 +3,7 @@ from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout, CMakeDeps
 
 
 class EmbeddedLibRecipe(ConanFile):
-    name = "embedded-lib"
+    name = "embeddedlib"
     version = "0.1.0"
     package_type = "library"
 
@@ -49,4 +49,4 @@ class EmbeddedLibRecipe(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.libs = ["embedded-lib"]
+        self.cpp_info.libs = ["embeddedlib"]

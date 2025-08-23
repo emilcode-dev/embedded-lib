@@ -53,3 +53,10 @@ dkms.conf
 
 # CMake build directory
 /build/*
+
+# Ignore test package build files
+/test_package/build/*
+test_package/CMakeUserPresets.json
+
+# VS Code settings
+/.vscode/*

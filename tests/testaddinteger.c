@@ -1,5 +1,5 @@
 #include "unity.h"
-#include "embeddedlib/embeddedlib.h"
+#include "embeddedlib.h"
 
 void setUp(void) {}
 void tearDown(void) {}
