@@ -1,0 +1,70 @@
+name: Embedded Lib Conan Package with JFROG CLI 
+
+on:
+  push:
+    tags: [ "v*" ]  
+  workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/embedded-lib-dev:latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   
+
+      - name: Extract version from tag
+        id: vars
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          VERSION=${TAG#v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Check environment
+        run: |
+          conan --version
+          cmake --version
+          gcc --version
+
+      # 👉 Setup JFrog CLI
+      - uses: jfrog/setup-jfrog-cli@v3
+
+      - name: Configure JFrog CLI
+        run: |
+          jfrog rt c add emilcode \
+            --url=https://emilcodedev.jfrog.io/artifactory \
+            --access-token=${{ secrets.JFROG_CONAN }} \
+            --interactive=false
+
+      - name: Create Conan package
+        run: |
+          conan profile detect --force
+          # create Conan package via JFrog CLI and attach build info
+          jfrog rt conan-create . \
+            --build missing \
+            --user ephraim.eckl \
+            --channel stable \
+            --version ${{ steps.vars.outputs.version }} \
+            --build-name=embedded-lib \
+            --build-number=${{ github.run_number }}
+
+      - name: Upload Conan package
+        run: |
+          # upload package to Artifactory repository
+          jfrog rt conan-upload "*" emilcode-conan \
+            --build-name=embedded-lib \
+            --build-number=${{ github.run_number }} \
+            --module=embedded-lib \
+            --force=true
+
+      - name: Publish build info
+        run: |
+          # publish metadata (build info) to Artifactory
+          jfrog rt build-publish embedded-lib ${{ github.run_number }}
