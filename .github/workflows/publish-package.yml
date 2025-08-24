@@ -50,7 +50,7 @@ jobs:
 
       - name: Upload Conan package
         run: |
-          conan upload "*/${{ steps.vars.outputs.version }}@" --remote=github --confirm
+          conan upload embeddedlib --remote=github --confirm
         env:
           CONAN_LOGIN_USERNAME: ${{ github.actor }}
           CONAN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
