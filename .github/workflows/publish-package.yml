@@ -1,4 +1,4 @@
-name: Conan Package
+name: Embedded Lib Conan Package 
 
 on:
   push:
@@ -35,21 +35,17 @@ jobs:
 
       - name: Configure Conan remote
         run: |
-          conan remote add github "https://conan.pkg.github.com/${{ github.repository_owner }}" --force
-          conan remote list
+          conan remote add emilcode-conan https://emilcodedev.jfrog.io/artifactory/api/conan/emilcode-conan
+          conan remote login -p $JFORG_TOKEN emilcode-conan ephraim.eckl@posteo.de
         env:
-          CONAN_LOGIN_USERNAME: ${{ github.actor }}
-          CONAN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          JFORG_TOKEN: ${{ secrets.JFORG_CONAN }}
 
       - name: Create Conan package
         run: |
           conan profile detect --force
-          conan create . --user=${{ github.repository_owner }} --channel=stable
+          conan create . --build=missing
         env:
           CONAN_REF_VERSION: ${{ steps.vars.outputs.version }}
 
       - name: Upload Conan package
-        run: conan upload embeddedlib --remote=github --confirm --user $CONAN_LOGIN_USERNAME --password $CONAN_PASSWORD
-        env:
-          CONAN_LOGIN_USERNAME: ${{ github.actor }}
-          CONAN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: conan upload "*" --remote=emilcode-conan --confirm
