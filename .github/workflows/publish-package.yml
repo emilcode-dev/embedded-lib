@@ -49,8 +49,7 @@ jobs:
           CONAN_REF_VERSION: ${{ steps.vars.outputs.version }}
 
       - name: Upload Conan package
-        run: |
-          conan upload embeddedlib --remote=github --confirm
+        run: conan upload embeddedlib --remote=github --confirm --user $CONAN_LOGIN_USERNAME --password $CONAN_PASSWORD
         env:
           CONAN_LOGIN_USERNAME: ${{ github.actor }}
           CONAN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
