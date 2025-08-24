@@ -21,5 +21,5 @@ RUN apt-get update && \
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
-# Install python packages
+# Install needed python packages
 RUN pip3 install conan sphinx_rtd_theme breathe --break-system-packages

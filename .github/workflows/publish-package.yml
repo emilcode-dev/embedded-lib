@@ -2,9 +2,8 @@ name: Conan Package
 
 on:
   push:
-    branches: [ main ]
-    tags: [ "v*" ]   # Nur Tags, die mit v beginnen (z.B. v1.2.3)
-  pull_request:
+    tags: [ "v*" ]   
+  workflow_dispatch:
 
 jobs:
   build-and-publish:
@@ -19,9 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # wichtig, damit Tags verfügbar sind
+          fetch-depth: 0   
 
-      # Version aus Git-Tag ableiten
       - name: Extract version from tag
         id: vars
         run: |
@@ -45,7 +43,10 @@ jobs:
 
       - name: Create Conan package
         run: |
-          conan create . --version=${{ steps.vars.outputs.version }} --user=${{ github.actor }} --channel=stable
+          conan profile detect --force
+          conan create . --user=${{ github.repository_owner }} --channel=stable
+        env:
+          CONAN_REF_VERSION: ${{ steps.vars.outputs.version }}
 
       - name: Upload Conan package
         run: |
