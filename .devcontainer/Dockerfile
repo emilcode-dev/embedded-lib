@@ -10,7 +10,16 @@ RUN apt-get update && \
     git \
     build-essential \
     gdb \
-    cmake
+    cmake \
+    doxygen \
+    graphviz \
+    locales && \
+    locale-gen en_US.UTF-8 && \
+    update-locale LANG=en_US.UTF-8
+
+# Set locale environment variables
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
 
 # Install python packages
-RUN pip3 install conan --break-system-packages
+RUN pip3 install conan sphinx_rtd_theme breathe --break-system-packages

@@ -60,3 +60,9 @@ test_package/CMakeUserPresets.json
 
 # VS Code settings
 /.vscode/*
+
+# doxygen output
+/doc/builddoxy/*
+
+# Sphinx build directory
+/doc/build/*
