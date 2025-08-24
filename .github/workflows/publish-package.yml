@@ -10,9 +10,6 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
 
-container:
-  image: ubuntu:24.04
-  options: --user 0
 steps:
   # 1. Checkout repo
   - uses: actions/checkout@v4
