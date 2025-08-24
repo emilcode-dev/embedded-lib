@@ -36,9 +36,9 @@ jobs:
       - name: Configure Conan remote
         run: |
           conan remote add emilcode-conan https://emilcodedev.jfrog.io/artifactory/api/conan/emilcode-conan
-          conan remote login -p $JFORG_TOKEN emilcode-conan ephraim.eckl@posteo.de
+          conan remote login -p $JFROG_TOKEN emilcode-conan ephraim.eckl@posteo.de
         env:
-          JFORG_TOKEN: ${{ secrets.JFORG_CONAN }}
+          JFROG_TOKEN: ${{ secrets.JFROG_CONAN }}
 
       - name: Create Conan package
         run: |
