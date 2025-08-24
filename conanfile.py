@@ -1,10 +1,11 @@
+import os
 from conan import ConanFile
 from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout, CMakeDeps
 
 
 class EmbeddedLibRecipe(ConanFile):
     name = "embeddedlib"
-    version = "0.1.0"
+    version = os.getenv("CONAN_REF_VERSION", "0.0.0")
     package_type = "library"
 
     # Optional metadata
