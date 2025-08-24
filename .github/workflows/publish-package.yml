@@ -10,43 +10,43 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
 
-steps:
-  # 1. Checkout repo
-  - uses: actions/checkout@v4
-  
-  # 2. Set up Docker Buildx
-  - name: Build dev container
-    run: |
-      docker build -t my-dev -f .devcontainer/Dockerfile .
-      docker run my-dev echo "Container built"
+    steps:
+      # 1. Checkout repo
+      - uses: actions/checkout@v4
+    
+      # 2. Set up Docker Buildx
+      - name: Build dev container
+        run: |
+          docker build -t my-dev -f .devcontainer/Dockerfile .
+          docker run my-dev echo "Container built"
 
-  # 2. Verify environment
-  - name: Check environment
-    run: |
-      which conan
-      conan --version
-      cmake --version
-      gcc --version
+      # 2. Verify environment
+      - name: Check environment
+        run: |
+          which conan
+          conan --version
+          cmake --version
+          gcc --version
 
-  # 3. Configure Conan remote
-  - name: Configure Conan remote
-    run: |
-      conan remote add github "https://conan.pkg.github.com/${{ github.repository_owner }}" --force
-      conan remote list
-    env:
-      CONAN_LOGIN_USERNAME: ${{ github.actor }}
-      CONAN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+      # 3. Configure Conan remote
+      - name: Configure Conan remote
+        run: |
+          conan remote add github "https://conan.pkg.github.com/${{ github.repository_owner }}" --force
+          conan remote list
+        env:
+          CONAN_LOGIN_USERNAME: ${{ github.actor }}
+          CONAN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
-  # 4. Create the package
-  - name: Create Conan package
-    run: |
-      conan create . --version=0.1.0 --user=${{ github.actor }} --channel=stable
+      # 4. Create the package
+      - name: Create Conan package
+        run: |
+          conan create . --version=0.1.0 --user=${{ github.actor }} --channel=stable
 
-  # 5. Upload the package
-  - name: Upload package
-    run: |
-      conan upload "*/0.1.0@" --all -r=github --confirm
-    env:
-      CONAN_LOGIN_USERNAME: ${{ github.actor }}
-      CONAN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+      # 5. Upload the package
+      - name: Upload package
+        run: |
+          conan upload "*/0.1.0@" --all -r=github --confirm
+        env:
+          CONAN_LOGIN_USERNAME: ${{ github.actor }}
+          CONAN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
