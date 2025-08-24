@@ -45,6 +45,7 @@ jobs:
 
       - name: Create Conan package
         run: |
+          conan profile detect --force
           conan create . --version=${{ steps.vars.outputs.version }} --user=${{ github.actor }} --channel=stable
 
       - name: Upload Conan package
