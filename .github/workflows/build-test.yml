@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-publish:
+  build-and-test:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/${{ github.repository_owner }}/embedded-lib-dev:latest
@@ -27,7 +27,6 @@ jobs:
     
       - name: Create build directory
         run: mkdir build
-        working-directory: ./build
       
       - name: Configure CMake
         run: cmake -DTARGET_GROUP=test ..
