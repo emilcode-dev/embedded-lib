@@ -1,0 +1,39 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/embedded-lib-dev:latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check environment
+        run: |
+          cmake --version
+          gcc --version
+    
+      - name: Create build directory
+        run: mkdir build
+        working-directory: ./build
+      
+      - name: Configure CMake
+        run: cmake -DTARGET_GROUP=test ..
+        working-directory: ./build
+
+      - name: Build tests
+        run: cmake --build .
+        working-directory: ./build
+
+      - name: Run tests
+        run: ctest --output-on-failure
+        working-directory: ./build
