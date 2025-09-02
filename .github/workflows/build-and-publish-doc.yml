@@ -10,13 +10,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
+  build-and-deploy-doc:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/${{ github.repository_owner }}/embedded-lib-dev:latest
 
-  permissions:
-    contents: write
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
