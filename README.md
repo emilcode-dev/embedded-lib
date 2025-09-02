@@ -3,6 +3,8 @@
 [![Build Devcontainer Image](https://github.com/emilcode-dev/embedded-lib/actions/workflows/devcontainer.yml/badge.svg)](https://github.com/emilcode-dev/embedded-lib/actions/workflows/devcontainer.yml)
 [![Build and Deploy Docs](https://github.com/emilcode-dev/embedded-lib/actions/workflows/build-and-publish-doc.yml/badge.svg)](https://github.com/emilcode-dev/embedded-lib/actions/workflows/build-and-publish-doc.yml)
 
+[![Docs](https://img.shields.io/badge/docs-online-brightgreen)](https://emilcode-dev.github.io/embedded-lib/)
+
 EmbeddedLib is a modular C/C++ library designed for embedded software projects. It provides reusable components, build/test automation with CMake, and packaging via Conan. The repository supports both development and production builds, integrates with JFrog Artifactory for package management, and includes documentation generation tools. This project aims to streamline embedded development workflows and promote code reuse across projects.
 
 ### Developer guide
